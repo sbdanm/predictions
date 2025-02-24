@@ -1,0 +1,95 @@
+### information will be added here ###
+
+Requirements to run the code:
+- Python3, interpretor is using python3.11 (no venv was created)
+- code is using only built in libraries;
+
+- directories with tickers shall be added/created by the user under following 
+path: Repository/input_stock_price_data_files (readme also there);
+- directories with output data are expected to be found under following path: Repository/output_stock_price_data_files,
+directory shall be added/created by the user;
+
+Both directories were not include into repository because the user can decide by himself if he/she wants to maintain the name of the directories or to change them.
+If the user wants to change the names of the directories to "inputs" and "outputs", the only required thing is to rename the following variables in predict_stock_value.py file:
+
+REMINDER!!!! --- Directories must be created by the user before running the code. If we'll want to have those directories into the repository, we can add them in future commits, but at this moment they are not part of the repository at this moment
+
+from:
+input_directory = "input_stock_price_data_files"
+output_directory = "output_stock_price_data_files"
+
+to:
+input_directory = "inputs"
+output_directory = "outputs"
+
+
+- OS used: Windows;
+- to run the app/scripts:
+    1. Install Python3 (version 3.11),
+    2. from CLI navigate under repository path using command cd ABSOLUTE_REPOSITORY_PATH;
+    3. run command python predict_stock_value.py (NOTE - prompt of the cli shall reflect the ABSOLUT_REPOSITORY_PATH_
+
+Log example in CLI:
+For FLTR We are having the following 10 consecutive values:
+ 3 --> Date: 04-09-2023, Price: 16176.91
+ 4 --> Date: 05-09-2023, Price: 16419.56
+ 5 --> Date: 06-09-2023, Price: 16288.21
+ 6 --> Date: 07-09-2023, Price: 16483.67
+ 7 --> Date: 08-09-2023, Price: 16516.63
+ 8 --> Date: 09-09-2023, Price: 16401.02
+ 9 --> Date: 10-09-2023, Price: 16384.62
+ 10 --> Date: 11-09-2023, Price: 16482.92
+ 11 --> Date: 12-09-2023, Price: 16351.06
+ 12 --> Date: 13-09-2023, Price: 16220.25
+Predicted Prices:
+Ticker: FLTR, Date: 14-09-2023, Price: 16483.67
+Ticker: FLTR, Date: 15-09-2023, Price: 16351.96
+Ticker: FLTR, Date: 16-09-2023, Price: 16450.7425 #### (in .csv file you'll find the price rounded at only 2 decimals,)
+In the logs I left it in purpuse the see the difference since could be situations when the 3rd prediction can be the
+same with 1st prediction if we are using round);
+FLTR_predict_price.csv was successful created
+
+
+Improvements:
+
+For 1st function that suppose to choose 10 consecutive elements:
+- 10 consecutive numbers can be improvement since at this moment is hardcoded. an input variable can be added in order
+test difderent values. eg 0 (boundary), a value between 0 and total length of the dates in the csv, smth beyond of
+the boundary;
+- based on above, protection shall be added if the chosen number is near the end of the end date, because if chosen
+random number has only 5 numbers to end the date, it will not be able to cover 10 consecutive entries (hardcoded).
+That protection can behave based on the requirements, eg: to print only the left numbers, to not continue, etc;
+- logs that can be stored into some dedicated files that can help for debug & information purposes with what is happening
+in the process;
+- for each file that is created, must be deleted before creating the new ones, why?
+1. because if you re using different tickers next run, the old ones will still appear there;
+2. old ticker data shall be updated with new ticker data files;
+
+For 2nd function that suppose to predict the price:
+
+- in for loop that is starting with line 102, is better to be implemented with datetime, is more "python way", also the logic behind establishing the dates is having an issue when 
+working with dates that are near the end of the month. Because is incrementing by 1 the last date, and in the situation when last date is 31, the next predicted date is 32, which is wrong.
+I left it like this because of the main idea in the mail "try to not spend to much time, we want to see how you think" and I m not so familiar with datetime library, but definetly after a little bit of 
+research that one can be fixed. 
+The reason why will not hit that problem is because at each run, the seed() function of the random library is resetting the "coursor" to zero (0) each run;
+Another way to fix it without datetime is to add checks of the date by month, eg, if is February and leaf year, check if last date is 28 or no and reset the date in March 01, but it will increase 
+the numbers of python lines.
+Another way to fix this is to use chatgpt to generate the code, but I prefered to developed everything in that file, it not make sense and is not ok to have this approach for this purpose;
+
+- prediciton of n+1 (2nd highest) can me implemented also with new list, max() function, delete the 1st highest, max()
+func again and take it;
+
+Code is having implemented try / except, dedicated Exceptions can be implemented in order to catch and try to make the
+errors more understandable to be added to some log files (personalized Exceptions);
+
+for both functions, printed logs to the cli can be improved
+
+Why I choose try/except --> from the code perspective, is covering everything that can go wrong and the code is better
+structured;
+Choosing to treat different scenarios that can go wrong, can miss some scenarios at the moment of developing the
+structure of the functions and can lead to bugs/issues in treating scenarios and can break the run of the script;
+
+Notes:
+- around 4 hours spent with everything (not only coding): set the repository, understand the requirements,
+implement the code, try to see the improvements, write the readme and add all details and also verify the output
+- I tried to follow as much as possible PEP-8 structure
