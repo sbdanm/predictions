@@ -75,6 +75,7 @@ The reason why will not hit that problem is because at each run, the seed() func
 Another way to fix it without datetime is to add checks of the date by month, eg, if is February and leaf year, check if last date is 28 or no and reset the date in March 01, but it will increase 
 the numbers of python lines.
 Another way to fix this is to use chatgpt to generate the code, but I prefered to developed everything in that file, it not make sense and is not ok to have this approach for this purpose;
+Hope that it will be appreciate it I left it like this, I wanted to see that I m familiar with mixing other aproches/logic/behavior in a for loop.
 
 - prediciton of n+1 (2nd highest) can me implemented also with new list, max() function, delete the 1st highest, max()
 func again and take it;
